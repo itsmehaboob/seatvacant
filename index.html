@@ -1,0 +1,63 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1d4ed8">
+    <title>Seat Availability</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+    <header>Seat Availability Finder</header>
+
+    <div class="container">
+
+        <div class="card">
+            <select id="route">
+                <option value="via_kottayam">Via Kottayam</option>
+                <option value="via_alappuzha">Via Alappuzha</option>
+            </select>
+
+            <input id="trainNo" placeholder="Train Number">
+            <input id="date" type="date">
+            <input id="cls" placeholder="Class (SL, 3A)">
+            <input id="chartType" placeholder="Charting Type">
+            <select id="from"></select>
+            <select id="to"></select>
+
+            <button onclick="fetchData()">Check Availability</button>
+        </div>
+
+        <div class="card">
+            <input id="search" class="search-box" placeholder="Search..." onkeyup="filterTable()">
+
+            <div class="table-container">
+                <table id="resultTable">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable(0)">Coach</th>
+                            <th onclick="sortTable(1)">Berth</th>
+                            <th>Type</th>
+                            <th>Available</th>
+                            <th>Your Use</th>
+                            <th onclick="sortTable(5)">Match %</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+    <script src="ui.js"></script>
+
+</body>
+
+</html>

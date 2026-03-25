@@ -1,0 +1,301 @@
+{
+    "route": "TVC to CBE (via Kottayam and Alappuzha)",
+    "common_start": [
+        {
+            "name": "Thiruvananthapuram Central",
+            "code": "TVC"
+        },
+        {
+            "name": "Kochuveli",
+            "code": "KCVL"
+        },
+        {
+            "name": "Kazhakkoottam",
+            "code": "KZK"
+        },
+        {
+            "name": "Kaniyapuram",
+            "code": "KXP"
+        },
+        {
+            "name": "Murukkumpuzha",
+            "code": "MQU"
+        },
+        {
+            "name": "Perunguzhi",
+            "code": "PGZ"
+        },
+        {
+            "name": "Chirayinkeezhu",
+            "code": "CRY"
+        },
+        {
+            "name": "Kadakkavur",
+            "code": "KVU"
+        },
+        {
+            "name": "Varkala Sivagiri",
+            "code": "VAK"
+        },
+        {
+            "name": "Edavai",
+            "code": "EVA"
+        },
+        {
+            "name": "Kappil",
+            "code": "KFI"
+        },
+        {
+            "name": "Paravur",
+            "code": "PVU"
+        },
+        {
+            "name": "Mayyanad",
+            "code": "MYY"
+        },
+        {
+            "name": "Iravipuram",
+            "code": "IRP"
+        },
+        {
+            "name": "Kollam Junction",
+            "code": "QLN"
+        }
+    ],
+    "routes": {
+        "via_kottayam": [
+            {
+                "name": "Sasthamkotta",
+                "code": "STKT"
+            },
+            {
+                "name": "Karunagappalli",
+                "code": "KPY"
+            },
+            {
+                "name": "Kayamkulam Junction",
+                "code": "KYJ"
+            },
+            {
+                "name": "Mavelikara",
+                "code": "MVLK"
+            },
+            {
+                "name": "Chengannur",
+                "code": "CNGR"
+            },
+            {
+                "name": "Thiruvalla",
+                "code": "TRVL"
+            },
+            {
+                "name": "Changanassery",
+                "code": "CGY"
+            },
+            {
+                "name": "Kottayam",
+                "code": "KTYM"
+            },
+            {
+                "name": "Ettumanoor",
+                "code": "ETM"
+            },
+            {
+                "name": "Kuruppantara",
+                "code": "KRPP"
+            },
+            {
+                "name": "Vaikom Road",
+                "code": "VARD"
+            },
+            {
+                "name": "Piravom Road",
+                "code": "PVRD"
+            },
+            {
+                "name": "Tripunithura",
+                "code": "TRTR"
+            }
+        ],
+        "via_alappuzha": [
+            {
+                "name": "Karunagappalli",
+                "code": "KPY"
+            },
+            {
+                "name": "Ochira",
+                "code": "OCR"
+            },
+            {
+                "name": "Kayamkulam Junction",
+                "code": "KYJ"
+            },
+            {
+                "name": "Cheppad Halt",
+                "code": "CHPD"
+            },
+            {
+                "name": "Haripad",
+                "code": "HAD"
+            },
+            {
+                "name": "Ambalappuzha",
+                "code": "AMPA"
+            },
+            {
+                "name": "Alappuzha",
+                "code": "ALLP"
+            },
+            {
+                "name": "Tumboli",
+                "code": "TMPY"
+            },
+            {
+                "name": "Cherthala",
+                "code": "SRTL"
+            },
+            {
+                "name": "Turavur",
+                "code": "TUVR"
+            },
+            {
+                "name": "Aroor",
+                "code": "AROR"
+            }
+        ]
+    },
+    "common_end": [
+        {
+            "name": "Ernakulam Junction",
+            "code": "ERS"
+        },
+        {
+            "name": "Ernakulam Town",
+            "code": "ERN"
+        },
+        {
+            "name": "Idappally",
+            "code": "IPL"
+        },
+        {
+            "name": "Kalamassery",
+            "code": "KLMR"
+        },
+        {
+            "name": "Aluva",
+            "code": "AWY"
+        },
+        {
+            "name": "Chowara",
+            "code": "CWR"
+        },
+        {
+            "name": "Angamaly",
+            "code": "AFK"
+        },
+        {
+            "name": "Karukkutty",
+            "code": "KUC"
+        },
+        {
+            "name": "Koratti Angadi",
+            "code": "KRAN"
+        },
+        {
+            "name": "Divine Nagar",
+            "code": "DINR"
+        },
+        {
+            "name": "Chalakudy",
+            "code": "CKI"
+        },
+        {
+            "name": "Irinjalakuda",
+            "code": "IJK"
+        },
+        {
+            "name": "Nellayi",
+            "code": "NYI"
+        },
+        {
+            "name": "Pudukkad",
+            "code": "PUK"
+        },
+        {
+            "name": "Ollur",
+            "code": "OLR"
+        },
+        {
+            "name": "Thrissur",
+            "code": "TCR"
+        },
+        {
+            "name": "Punkunnam",
+            "code": "PNQ"
+        },
+        {
+            "name": "Mulangunnathukavu",
+            "code": "MGK"
+        },
+        {
+            "name": "Wadakancheri",
+            "code": "WKI"
+        },
+        {
+            "name": "Mullurkara",
+            "code": "MUC"
+        },
+        {
+            "name": "Vallathol Nagar",
+            "code": "VTK"
+        },
+        {
+            "name": "Shoranur Junction",
+            "code": "SRR"
+        },
+        {
+            "name": "Ottappalam",
+            "code": "OTP"
+        },
+        {
+            "name": "Lakkiti",
+            "code": "LDY"
+        },
+        {
+            "name": "Mankara",
+            "code": "MNY"
+        },
+        {
+            "name": "Parli",
+            "code": "PLL"
+        },
+        {
+            "name": "Palakkad Junction",
+            "code": "PGT"
+        },
+        {
+            "name": "Kanjikode",
+            "code": "KJKD"
+        },
+        {
+            "name": "Walayar",
+            "code": "WRA"
+        },
+        {
+            "name": "Ettimadai",
+            "code": "ETMD"
+        },
+        {
+            "name": "Madukkarai",
+            "code": "MDKI"
+        },
+        {
+            "name": "Podanur Junction",
+            "code": "PTJ"
+        },
+        {
+            "name": "Coimbatore Junction",
+            "code": "CBE"
+        }
+    ]
+}
