@@ -1,9 +1,9 @@
 function display(results, from, to, map) {
-    const tbody = document.querySelector('#resultTable tbody');
-    tbody.innerHTML = '';
+    const container = document.getElementById('results');
+    container.innerHTML = '';
 
     if (!results.length) {
-        tbody.innerHTML = '<tr><td colspan="6">No results</td></tr>';
+        container.innerHTML = '<div class="no-results">No results</div>';
         return;
     }
 
@@ -21,58 +21,28 @@ function display(results, from, to, map) {
         const usableFrom = route[overlapStart]?.code || '';
         const usableTo = route[overlapEnd]?.code || '';
 
-        const tr = document.createElement('tr');
+        const div = document.createElement('div');
+        div.className = 'result';
 
-        tr.innerHTML = `
-        <td>${r.coachName}</td>
-        <td>${r.berthNumber}</td>
-        <td>${r.berthCode}</td>
-        <td>${r.from} → ${r.to}</td>
-        <td>${usableFrom} → ${usableTo}</td>
-        <td><span class="badge ${r.match === 100 ? 'full' : 'partial'}">${r.match}%</span></td>
+        div.innerHTML = `
+            <div class="result-item"><strong>Coach:</strong> ${r.coachName}</div>
+            <div class="result-item"><strong>Berth:</strong> ${r.berthNumber} (${r.berthCode})</div>
+            <div class="result-item"><strong>Available:</strong> ${r.from} → ${r.to}</div>
+            <div class="result-item"><strong>Your Use:</strong> ${usableFrom} → ${usableTo}</div>
+            <div class="result-item"><strong>Match:</strong> <span class="badge ${r.match === 100 ? 'full' : 'partial'}">${r.match}%</span></div>
         `;
 
-        tbody.appendChild(tr);
+        container.appendChild(div);
     });
-}
-
-function sortTable(col) {
-    const table = document.getElementById("resultTable");
-    let switching = true;
-    let dir = "desc";
-
-    while (switching) {
-        switching = false;
-        let rows = table.rows;
-
-        for (let i = 1; i < rows.length - 1; i++) {
-            let shouldSwitch = false;
-            let x = rows[i].getElementsByTagName("TD")[col];
-            let y = rows[i + 1].getElementsByTagName("TD")[col];
-
-            if (dir === "asc" && x.innerText > y.innerText) shouldSwitch = true;
-            if (dir === "desc" && x.innerText < y.innerText) shouldSwitch = true;
-
-            if (shouldSwitch) {
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-            }
-        }
-
-        if (!switching && dir === "desc") {
-            dir = "asc";
-            switching = true;
-        }
-    }
 }
 
 function filterTable() {
     const input = document.getElementById("search");
     const filter = input.value.toUpperCase();
-    const rows = document.querySelectorAll("#resultTable tbody tr");
+    const results = document.querySelectorAll("#results .result");
 
-    rows.forEach(row => {
-        const text = row.innerText.toUpperCase();
-        row.style.display = text.includes(filter) ? "" : "none";
+    results.forEach(result => {
+        const text = result.innerText.toUpperCase();
+        result.style.display = text.includes(filter) ? "" : "none";
     });
 }
