@@ -13,6 +13,11 @@ const registerServiceWorker = async () => {
 
 window.addEventListener('load', () => {
     registerServiceWorker();
+
+    // Prefill date with today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date').value = today;
+
     fetch('stations.json')
         .then(res => res.json())
         .then(data => {
@@ -87,10 +92,25 @@ function calculateMatch(seat, fromIdx, toIdx, map) {
     return Math.round((overlap / total) * 100);
 }
 
+// Loading indicator
+function setLoading(isLoading) {
+    const loader = document.getElementById('loader');
+    if (!loader) return;
+
+    if (isLoading) {
+        loader.classList.remove('hidden');
+    } else {
+        loader.classList.add('hidden');
+    }
+}
+
 // Fetch IRCTC data
 async function fetchData() {
+    setLoading(true);
+
     const route = buildRoute();
     if (!route.length) {
+        setLoading(false);
         alert("Station data not loaded yet");
         return;
     }
@@ -111,7 +131,7 @@ async function fetchData() {
     const body = {
         trainNo: document.getElementById('trainNo').value,
         boardingStation: from,
-        remoteStation: route[0].code,
+        remoteStation: document.getElementById('remoteStation').value,
         trainSourceStation: route[0].code,
         jDate: document.getElementById('date').value,
         cls: document.getElementById('cls').value,
@@ -132,18 +152,21 @@ async function fetchData() {
         });
 
         data = await res.json();
-        
+
         if (!data || !data.vbd) {
             alert("No berth data found");
+            setLoading(false);
             return;
         }
     } catch (e) {
         console.error(e);
         alert("API call failed (CORS likely). Use proxy later.");
+        setLoading(false);
         return;
     }
 
     processResults(data, route, map, from, to, fromIdx, toIdx);
+    setLoading(false);
 }
 
 // Process and filter results

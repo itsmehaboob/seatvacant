@@ -26,9 +26,11 @@
             <input id="date" type="date">
             <input id="cls" placeholder="Class (SL, 3A)">
             <input id="chartType" placeholder="Charting Type">
+            <input id="remoteStation" placeholder="Remote Station">
             <select id="from"></select>
             <select id="to"></select>
 
+            <div id="loader" class="loader hidden"></div>
             <button onclick="fetchData()">Check Availability</button>
         </div>
 
@@ -36,19 +38,7 @@
             <input id="search" class="search-box" placeholder="Search..." onkeyup="filterTable()">
 
             <div class="table-container">
-                <table id="resultTable">
-                    <thead>
-                        <tr>
-                            <th onclick="sortTable(0)">Coach</th>
-                            <th onclick="sortTable(1)">Berth</th>
-                            <th>Type</th>
-                            <th>Available</th>
-                            <th>Your Use</th>
-                            <th onclick="sortTable(5)">Match %</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                <div id="results"></div>
             </div>
 
         </div>
