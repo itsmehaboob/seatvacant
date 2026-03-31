@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial;
     margin: 0;
@@ -39,11 +43,25 @@ header {
     .result {
         padding: 10px;
     }
+    overflow: hidden;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+    .card {
+        padding: 10px;
+    }
+    .result {
+        padding: 10px;
+    }
 }
 
 input,
 select {
     width: 100%;
+    max-width: 100%;
     max-width: 100%;
     padding: 10px;
     margin-top: 8px;
@@ -207,7 +225,86 @@ th {
 .result {
     border: 1px solid #ddd;
     padding: 10px;
+    margin-bottom: 15px;
+    padding: 12px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.search-box:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.result {
+    border: 1px solid #e2e8f0;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.result:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.result-item {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.result-item strong {
+    color: #4a5568;
+}
+
+.no-results {
+    text-align: center;
+    color: #718096;
+    font-style: italic;
+    padding: 20px;
+}
+
+@media (min-width: 769px) {
+    .result {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .result-item {
+        flex: 1;
+        margin-bottom: 0;
+    }
+}
+
+.result {
+    border: 1px solid #ddd;
+    padding: 10px;
     margin-bottom: 10px;
+    border-radius: 5px;
+    background: white;
+}
+
+.result-item {
+    margin-bottom: 5px;
+}
+
+@media (min-width: 769px) {
+    .result {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .result-item {
+        flex: 1;
+        margin-bottom: 0;
+    }
     border-radius: 5px;
     background: white;
 }

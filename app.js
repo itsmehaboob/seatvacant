@@ -142,6 +142,18 @@ function setLoading(isLoading) {
     }
 }
 
+// Loading indicator
+function setLoading(isLoading) {
+    const loader = document.getElementById('loader');
+    if (!loader) return;
+
+    if (isLoading) {
+        loader.classList.remove('hidden');
+    } else {
+        loader.classList.add('hidden');
+    }
+}
+
 // Fetch IRCTC data
 async function fetchData() {
     setLoading(true);
@@ -161,6 +173,7 @@ async function fetchData() {
 
     const route = buildRoute();
     if (!route.length) {
+        setLoading(false);
         setLoading(false);
         alert("Station data not loaded yet");
         return;
@@ -183,6 +196,7 @@ async function fetchData() {
         trainNo: requestedTrainNumber,
         boardingStation: from,
         remoteStation: document.getElementById('remoteStation').value,
+        remoteStation: document.getElementById('remoteStation').value,
         trainSourceStation: route[0].code,
         jDate: document.getElementById('date').value,
         cls: document.getElementById('cls').value,
@@ -197,16 +211,19 @@ async function fetchData() {
         if (!data || !data.vbd) {
             alert("No berth data found");
             setLoading(false);
+            setLoading(false);
             return;
         }
     } catch (e) {
         console.error(e);
         alert("API call failed (CORS likely). Use proxy later.");
         setLoading(false);
+        setLoading(false);
         return;
     }
 
     processResults(data, route, map, from, to, fromIdx, toIdx);
+    setLoading(false);
     setLoading(false);
 }
 
