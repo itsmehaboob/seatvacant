@@ -17,12 +17,10 @@
     <div class="container">
 
         <div class="card">
-            <select id="route">
-                <option value="via_kottayam">Via Kottayam</option>
-                <option value="via_alappuzha">Via Alappuzha</option>
-            </select>
-
-            <input id="trainNo" placeholder="Train Number">
+            <div class="input-row">
+                <input id="trainNo" placeholder="Train Number">
+                <button id="loadRouteBtn" class="inline-button" onclick="loadRouteInfo()">Load Train Info</button>
+            </div>
             <input id="date" type="date">
             <input id="cls" placeholder="Class (SL, 3A)">
             <input id="chartType" placeholder="Charting Type">
@@ -45,6 +43,7 @@
 
     </div>
 
+    <script src="common.js"></script>
     <script src="app.js"></script>
     <script src="ui.js"></script>
 

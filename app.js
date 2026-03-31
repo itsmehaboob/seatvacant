@@ -1,4 +1,5 @@
 let stationData = {};
+let currentTrainNumber = '';
 
 const registerServiceWorker = async () => {
     if ('serviceWorker' in navigator) {
@@ -18,29 +19,68 @@ window.addEventListener('load', () => {
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('date').value = today;
 
-    fetch('stations.json')
-        .then(res => res.json())
-        .then(data => {
-            stationData = data;
-            populateDropdowns();
-        })
-        .catch(err => {
-            console.error("Failed to load stations.json", err);
-            alert("Error loading station data");
-        });
+    setupUpperCaseInputs();
 });
+
+async function loadRouteInfo() {
+    const trainNo = document.getElementById('trainNo').value.trim();
+    if (!trainNo) {
+        alert('Enter a train number before loading route info.');
+        return;
+    }
+
+    await loadStationData(trainNo);
+}
+
+async function loadStationData(trainNumber) {
+    if (!trainNumber) {
+        throw new Error('Train number is required to load route data.');
+    }
+
+    setLoading(true);
+
+    try {
+        const routeData = await getRouteInfo(trainNumber);
+
+        if (routeData?.stationList?.length) {
+            stationData = {
+                stationList: routeData.stationList.map(s => ({
+                    code: s.stationCode,
+                    name: s.stationName
+                }))
+            };
+
+            currentTrainNumber = trainNumber;
+            document.getElementById('remoteStation').value = routeData.stationFrom || '';
+            document.getElementById('trainNo').value = routeData.trainNumber || trainNumber;
+            populateDropdowns();
+            return;
+        }
+
+        throw new Error('Invalid route response');
+    } catch (err) {
+        console.error('Route API failed', err);
+        alert('Route API failed. Station data could not be loaded.');
+    } finally {
+        setLoading(false);
+    }
+}
+
+function setupUpperCaseInputs() {
+    document.querySelectorAll('input[type="text"], input:not([type])').forEach(input => {
+        input.style.textTransform = 'uppercase';
+        input.addEventListener('input', () => {
+            input.value = input.value.toUpperCase();
+        });
+    });
+}
 
 // Build full route
 function buildRoute() {
-    if (!stationData || !stationData.common_start) return [];
-
-    const routeType = document.getElementById('route').value;
-
-    return [
-        ...stationData.common_start,
-        ...(stationData.routes?.[routeType] || []),
-        ...stationData.common_end
-    ];
+    if (stationData?.stationList?.length) {
+        return stationData.stationList;
+    }
+    return [];
 }
 
 // Populate dropdowns
@@ -60,8 +100,6 @@ function populateDropdowns() {
     });
 }
 
-// Rebuild dropdowns on route change
-document.getElementById('route').addEventListener('change', populateDropdowns);
 
 // Create station index map
 function getIndexMap(route) {
@@ -104,12 +142,38 @@ function setLoading(isLoading) {
     }
 }
 
+// Loading indicator
+function setLoading(isLoading) {
+    const loader = document.getElementById('loader');
+    if (!loader) return;
+
+    if (isLoading) {
+        loader.classList.remove('hidden');
+    } else {
+        loader.classList.add('hidden');
+    }
+}
+
 // Fetch IRCTC data
 async function fetchData() {
     setLoading(true);
 
+    const requestedTrainNumber = document.getElementById('trainNo').value.trim();
+    if (!requestedTrainNumber) {
+        setLoading(false);
+        alert('Please enter a train number.');
+        return;
+    }
+
+    if (requestedTrainNumber !== currentTrainNumber || !stationData.stationList?.length) {
+        setLoading(false);
+        alert('Please load train info using the Load Train Info button before checking availability.');
+        return;
+    }
+
     const route = buildRoute();
     if (!route.length) {
+        setLoading(false);
         setLoading(false);
         alert("Station data not loaded yet");
         return;
@@ -129,8 +193,9 @@ async function fetchData() {
     }
 
     const body = {
-        trainNo: document.getElementById('trainNo').value,
+        trainNo: requestedTrainNumber,
         boardingStation: from,
+        remoteStation: document.getElementById('remoteStation').value,
         remoteStation: document.getElementById('remoteStation').value,
         trainSourceStation: route[0].code,
         jDate: document.getElementById('date').value,
@@ -141,20 +206,11 @@ async function fetchData() {
     let data;
 
     try {
-        const res = await fetch('https://www.irctc.co.in/online-charts/api/vacantBerth', {
-            method: 'POST',
-            headers: {
-                'accept': 'application/json',
-                'accept-language': 'en-US,en;q=0.9',
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        });
-
-        data = await res.json();
+        data = await getVacantBerth(body);
 
         if (!data || !data.vbd) {
             alert("No berth data found");
+            setLoading(false);
             setLoading(false);
             return;
         }
@@ -162,10 +218,12 @@ async function fetchData() {
         console.error(e);
         alert("API call failed (CORS likely). Use proxy later.");
         setLoading(false);
+        setLoading(false);
         return;
     }
 
     processResults(data, route, map, from, to, fromIdx, toIdx);
+    setLoading(false);
     setLoading(false);
 }
 
